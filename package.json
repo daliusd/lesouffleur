@@ -1,0 +1,19 @@
+{
+  "name": "lesouffleur",
+  "version": "0.0.1",
+  "description": "TODO",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "files": [
+    "/dist"
+  ],
+  "devDependencies": {
+    "@types/node": "^20.11.29",
+    "prettier": "^3.2.5",
+    "typescript": "^5.4.2"
+  },
+  "scripts": {
+    "test": ":",
+    "build": "tsc"
+  }
+}
