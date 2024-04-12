@@ -1,7 +1,10 @@
 import { Page, Selector, Options, ElementHandle } from './types';
 
 export function Component(page: Page, selectors: Selector[]) {
-  async function wait(options?: Options): Promise<ElementHandle | null> {
+  async function wait(
+    options: Options,
+    checkIfDisabled: boolean,
+  ): Promise<ElementHandle | null> {
     let current: Page | ElementHandle = page;
     if (selectors.length === 0) {
       return null;
@@ -10,11 +13,14 @@ export function Component(page: Page, selectors: Selector[]) {
       let result: Page | ElementHandle | null = null;
       if (s.waitFor === 'data-hook') {
         result = await current.waitForSelector(
-          `[data-hook="${s.value}"]`,
+          `[data-hook="${s.value}"]` +
+            (checkIfDisabled ? ':not([disabled])' : ''),
           options,
         );
       } else if (s.waitFor === 'text') {
-        const xpath = `//*[normalize-space()='${s.value}']`;
+        const xpath =
+          `//*[normalize-space()='${s.value}']` +
+          (checkIfDisabled ? '[not(@disabled)]' : '');
         result = await current.waitForXPath(xpath, options);
       } else if (s.waitFor === 'role') {
         let xpath = `//${s.value.role}`;
@@ -25,7 +31,9 @@ export function Component(page: Page, selectors: Selector[]) {
               if (s.value.role === 'img') {
                 xpath += `[contains(@alt, '${attrValue}')]`;
               } else if (s.value.role === 'button') {
-                xpath += `[contains(normalize-space(),'${attrValue}')]`;
+                xpath +=
+                  `[contains(normalize-space(),'${attrValue}')]` +
+                  (checkIfDisabled ? '[not(@disabled)]' : '');
               } else {
                 throw Error('Not implemented.');
               }
@@ -43,21 +51,21 @@ export function Component(page: Page, selectors: Selector[]) {
   }
 
   async function click() {
-    (await wait({ visible: true }))?.click();
+    (await wait({ visible: true }, true))?.click();
   }
 
   async function isVisible() {
-    return (await wait({ visible: true })) !== null;
+    return (await wait({ visible: true }, false)) !== null;
   }
 
   async function fill(input: string) {
-    return (await wait({ visible: true }))?.type(input);
+    return (await wait({ visible: true }, true))?.type(input);
   }
 
   async function containsText(text: string): Promise<boolean> {
-    const element = await wait();
+    const element = await wait({}, false);
     if (element) {
-      const value = await element.evaluate((el) => el.textContent);
+      const value = await element.evaluate((el: any) => el.textContent);
       return value?.includes(text) || false;
     }
     return false;
@@ -78,7 +86,7 @@ export function Component(page: Page, selectors: Selector[]) {
   }
 
   async function screenshot() {
-    return (await wait({ visible: true }))?.screenshot();
+    return (await wait({ visible: true }, false))?.screenshot();
   }
 
   return {

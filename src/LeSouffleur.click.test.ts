@@ -18,7 +18,7 @@ describe('LeSouffleur happy path', () => {
 
     expect(page.waitForSelector).toHaveBeenCalledOnce();
     expect(page.waitForSelector).toHaveBeenCalledWith(
-      '[data-hook="some-test-id"]',
+      '[data-hook="some-test-id"]:not([disabled])',
       {
         visible: true,
       },
@@ -42,7 +42,7 @@ describe('LeSouffleur happy path', () => {
 
     expect(page.waitForXPath).toHaveBeenCalledOnce();
     expect(page.waitForXPath).toHaveBeenCalledWith(
-      "//button[contains(normalize-space(),'Increment')]",
+      "//button[contains(normalize-space(),'Increment')][not(@disabled)]",
       {
         visible: true,
       },
@@ -66,7 +66,7 @@ describe('LeSouffleur happy path', () => {
 
     expect(page.waitForXPath).toHaveBeenCalledOnce();
     expect(page.waitForXPath).toHaveBeenCalledWith(
-      "//*[normalize-space()='Approve']",
+      "//*[normalize-space()='Approve'][not(@disabled)]",
       {
         visible: true,
       },
