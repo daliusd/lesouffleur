@@ -7,7 +7,7 @@ with minimal changes.
 
 This is very early version that might be improved in the future. Here some ideas:
 
-- [ ] Add tests
+- [x] Add tests
 
 - [ ] Add custom jest matchers. `codegen` generates matchers like
       `toContainText` or `toBeVisible` that are not supported by this library yet
@@ -28,6 +28,22 @@ await driver.getByTestId('some-test-id').click();
 await driver.getByRole('button', { name: 'Increment' }).click();
 await driver.getByText('Approve').click();
 ```
+
+## Development
+
+Since we are working on abstraction of Puppeteer here (no real Puppeteer types)
+make sure to write tests and, please, test with real product as well.
+
+You can use dev version by linking it. E.g. using yarn you can do something
+like this:
+
+```sh
+yarn add lesouffleur@portal:./../../../lesouffleur
+```
+
+The goal is to make Puppeteer act like Playwright as much as possible thus try
+to mimic Playwright behaviour, e.g. read how actions work here:
+https://playwright.dev/docs/actionability
 
 ## Misc
 
