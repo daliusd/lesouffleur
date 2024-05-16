@@ -18,6 +18,20 @@ This is very early version that might be improved in the future. Here some ideas
 - [ ] Support more functions and cases. Only small subset of `codegen`
       generated code is supported now.
 
+## Installation
+
+npm:
+
+```sh
+npm install -D lesouffleur
+```
+
+yarn:
+
+```sh
+yarn add -D lesouffleur
+```
+
 ## Usage
 
 ```ts
