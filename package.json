@@ -1,7 +1,7 @@
 {
   "name": "lesouffleur",
   "version": "0.0.3",
-  "description": "TODO",
+  "description": "Library to run Playwright codegen generated code with minimal modifications on Puppeteer",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "files": [
