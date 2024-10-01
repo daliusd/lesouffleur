@@ -74,7 +74,7 @@ describe('LeSouffleur click tests', () => {
     expect(click).toHaveBeenCalledOnce();
   });
 
-  it.only('awaits element before clicking', async () => {
+  it('awaits element before clicking', async () => {
     let called = false;
     const click = () =>
       new Promise((resolve) =>
