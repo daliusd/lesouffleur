@@ -51,7 +51,7 @@ export function Component(page: Page, selectors: Selector[]) {
   }
 
   async function click() {
-    (await wait({ visible: true }, true))?.click();
+    return (await wait({ visible: true }, true))?.click();
   }
 
   async function isVisible() {

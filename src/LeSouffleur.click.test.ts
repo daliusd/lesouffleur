@@ -2,7 +2,7 @@ import { expect, describe, it, vi } from 'vitest';
 import { LeSouffleur } from './LeSouffleur';
 import { ElementHandle, Page } from './types';
 
-describe('LeSouffleur happy path', () => {
+describe('LeSouffleur click tests', () => {
   it('clicks object by test id', async () => {
     const click = vi.fn();
     const page: Page = {
@@ -72,5 +72,27 @@ describe('LeSouffleur happy path', () => {
       },
     );
     expect(click).toHaveBeenCalledOnce();
+  });
+
+  it.only('awaits element before clicking', async () => {
+    let called = false;
+    const click = () =>
+      new Promise((resolve) =>
+        setTimeout(() => {
+          called = true;
+          resolve(0);
+        }, 10),
+      );
+    const page: Page = {
+      waitForSelector: vi.fn(
+        async (_selector, _options) => ({ click }) as unknown as ElementHandle,
+      ),
+      waitForXPath: vi.fn(),
+    };
+
+    const driver = new LeSouffleur(page);
+
+    await driver.getByTestId('some-test-id').click();
+    expect(called).toBeTruthy();
   });
 });
